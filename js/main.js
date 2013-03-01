@@ -45,8 +45,8 @@ calc.getRetirementYears = function () {
 			return null;
 
 		capital += salary - expenses;
-		salary  *= Math.pow( 1 + this.salaryIncrease, years );
-		expenses *= Math.pow( 1 + this.expensesIncrease, years );
+		salary  += salary * this.salaryIncrease;
+		expenses += expenses * this.expensesIncrease;
 		netIncome = capital * this.avgDividendYield;
 
 		$( '#detail-table' ).append(
@@ -78,12 +78,15 @@ $(document).ready( function() {
 	// ajaxify the form
 	$( '#wc-form' ).ajaxForm(function() {
 
+		// populate details table header
 		$( '#detail-table' ).html(
 			'<tr><th>Year</th><th>Capital</th><th>Salary</th><th>Expense</th><th>Dividend Income</th></tr>'
 		);
+
 		// get the calculation inputs
-		calc.salary = wcir.getFieldValue( 'salary' );
-		calc.capital = wcir.getFieldValue( 'capital' );
+		calc.capital 	= wcir.getFieldValue( 'capital' );
+		calc.salary 	= wcir.getFieldValue( 'salary' );
+		calc.expenses = wcir.getFieldValue( 'expenses' );
 
 		// calculate the number of years to retirement
 		var result = calc.getRetirementYears();
