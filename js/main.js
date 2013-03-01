@@ -19,16 +19,24 @@ wcir.getFieldValue = function ( fieldName ) {
 	}
 };
 
+wcir.putField = function ( selector, content, error ) {
+	if ( content )
+		$( selector ).html( content );
+	else
+		$( selector ).html( error );
+};
+
 // calculator object
 var calc = {};
 
 // calculation variables and default values
-calc.capital 					= 10000;
-calc.salary 					= 30000;
-calc.salaryIncrease 	= 0.05;
-calc.expenses 				= 20000;
-calc.expensesIncrease = 0.04;
-calc.avgDividendYield	= 0.04;
+calc.capital 					= 10000;	// current capital
+calc.salary 					= 30000;	// annual salary, after tax
+calc.salaryIncrease 	= 0.05;		// annual salary increase
+calc.expenses 				= 20000;	// total annual expenses
+calc.expensesIncrease = 0.04;		// annual expenses increase
+calc.avgDividendYield	= 0.04;		// average yearly dividend yield
+calc.capitalGain			= 0.05;		// annual capital appreciation, excludes dividend assuming no DRIP
 
 // returns the number of years it takes for dividend income = annual expenses
 calc.getRetirementYears = function () {
@@ -49,14 +57,14 @@ calc.getRetirementYears = function () {
 		expenses += expenses * this.expensesIncrease;
 		netIncome = capital * this.avgDividendYield;
 
-		$( '#detail-table' ).append(
-			'<tr><td>' 
-			+ years + '</td><td>' 
-			+ Math.round( capital ) + '</td><td>' 
-			+ Math.round( salary ) + '</td><td>' 
-			+ Math.round( expenses ) + '</td><td>' 
+		$( '#breakdown-table' ).append(
+			'<tr class="breakdown-row"><td>' 
+			+ years + '</td><td class="dollar">' 
+			+ Math.round( capital ) + '</td><td class="dollar">' 
+			+ Math.round( salary ) + '</td><td class="dollar">' 
+			+ Math.round( expenses ) + '</td><td class="dollar">' 
 			+ Math.round( netIncome ) + '</td></tr>'
-		)
+		);
 	}
 
 	return {
@@ -68,40 +76,37 @@ calc.getRetirementYears = function () {
 	};
 };
 
-
-
 $(document).ready( function() {
-
-	// hide the results until we have some
-	$( '#result' ).hide();
 
 	// ajaxify the form
 	$( '#wc-form' ).ajaxForm(function() {
 
-		// populate details table header
-		$( '#detail-table' ).html(
-			'<tr><th>Year</th><th>Capital</th><th>Salary</th><th>Expense</th><th>Dividend Income</th></tr>'
-		);
+		// clear table data
+		$( '.breakdown-row' ).remove();
 
 		// get the calculation inputs
-		calc.capital 	= wcir.getFieldValue( 'capital' );
-		calc.salary 	= wcir.getFieldValue( 'salary' );
-		calc.expenses = wcir.getFieldValue( 'expenses' );
+		calc.capital 	= wcir.getFieldValue( 'capital' ) * 1000;
+		calc.salary 	= wcir.getFieldValue( 'salary' ) * 1000;
+		calc.expenses = wcir.getFieldValue( 'expenses' ) * 1000;
 
 		// calculate the number of years to retirement
 		var result = calc.getRetirementYears();
-		if ( result.years ) 
-			$('#result-years').html( result.years );
-		else
-			$( '#result-years' ).html( '∞' );
 
-		if (result.netIncome) 
-			$( '#result-income' ).html( result.netIncome );
-		else
-			$( '#result-income' ).html( '0' );
+		// populate DOM with results and assumptions
+		wcir.putField( '#result-years', result.years, '∞' );
+		wcir.putField( '#result-income', result.netIncome, '0' );
+		wcir.putField( '#salary-increase', calc.salaryIncrease * 100, '?' );
+		wcir.putField( '#expenses-increase', calc.expensesIncrease * 100, '?' );
+		wcir.putField( '#dividend-yield', calc.avgDividendYield * 100, '?' );
+		// wcir.putField( '#capital-gain', calc.capitalGain * 100, '?' );
 
 		// now display results
 		$( '#result' ).show();
+
+		// show details button
+		$( '#show-details' ).click( function() {
+			$( '#details' ).show();
+		});
 
 	});
 })

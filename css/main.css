@@ -5,13 +5,17 @@
    ========================================================================== */
 
 
-.result-value {
+.value {
 	color: red;
 	font-weight: bold;
 }
 
-#result-income:before {
+.dollar:before {
 	content: '$';
+}
+
+.percent:after {
+	content: '%';
 }
 
 /**
