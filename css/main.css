@@ -5,8 +5,25 @@
    ========================================================================== */
 
 
+.value {
+	color: red;
+	font-weight: bold;
+}
+
+.currency:before {
+	content: '$';
+}
+
+.percent:after {
+	content: '%';
+}
+
+.negative-currency:before {
+	content: '-$';
+}
+
 /**
- * New micro clearfix hack by Nicholas Gallagher.
+ * Micro clearfix hack by Nicholas Gallagher.
  *
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
