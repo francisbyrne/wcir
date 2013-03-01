@@ -86,13 +86,13 @@
           </form>
           <div id='result' class='span4 hide'>
             <legend id='resultTitle'>You can seriously retire...</legend>
-            <p id='resultDesc'>... in <span id='result-years' class='value'>∞</span> years, with a net income of <span id='result-income' class='value dollar'>0</span>.</p>
+            <p id='resultDesc'>... in <span id='result-years' class='value'>∞</span> years, with a net income of <span id='result-income' class='value currency'>0</span>.</p>
             <p><button id='show-details' class="btn btn-primary btn-med">Show Details &raquo;</button></p>
           </div>
         </div>
       </div>
 
-      <div id='details' class='container hide'>
+      <div id='details' class='container'>
         <div class='row-fluid'>
           <div class='breakdown span7'>
             <h3>Yearly breakdown</h3>
@@ -100,6 +100,7 @@
                 <tr>
                     <th>Year</th>
                     <th>Capital</th>
+                    <th>Capital Gain</th>
                     <th>Salary</th>
                     <th>Expense</th>
                     <th>Dividend Income</th>
@@ -107,12 +108,12 @@
             </table>
           </div>
 
-          <div class='assumptions'>
+          <div class='assumptions span5'>
             <h3>Assumptions</h3>
             <p>Annual Salary Increase is <span id='salary-increase' class='value percent'></span>.</p>
             <p>Annual Expenses Increase is <span id='expenses-increase' class='value percent'></span>.</p>
             <p>Average Dividend Yield is <span id='dividend-yield' class='value percent'></span>.</p>
-            <!-- <p>Annual Capital Appreciation is <span id='capital-gain' class='value percent'></span>.</p> -->
+            <p>Annual Capital Appreciation is <span id='capital-gain' class='value percent'></span>.</p>
           </div>
         </div>
       </div>

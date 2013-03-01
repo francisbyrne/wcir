@@ -35,8 +35,8 @@ calc.salary 					= 30000;	// annual salary, after tax
 calc.salaryIncrease 	= 0.05;		// annual salary increase
 calc.expenses 				= 20000;	// total annual expenses
 calc.expensesIncrease = 0.04;		// annual expenses increase
-calc.avgDividendYield	= 0.04;		// average yearly dividend yield
-calc.capitalGain			= 0.05;		// annual capital appreciation, excludes dividend assuming no DRIP
+calc.avgDividendYield	= 0.04;		// average yearly dividend yield, after tax
+calc.capitalGain			= 0.05;		// annual capital appreciation, excludes tax and dividend, assuming no DRIP
 
 // returns the number of years it takes for dividend income = annual expenses
 calc.getRetirementYears = function () {
@@ -44,6 +44,7 @@ calc.getRetirementYears = function () {
 	var netIncome = 	0,
 		years 			= 	0,
 		capital 		= 	calc.capital,
+		capitalGain =		0,
 		salary 			= 	calc.salary,
 		expenses 		= 	calc.expenses;
 
@@ -52,6 +53,8 @@ calc.getRetirementYears = function () {
 		if ( years > 100 )
 			return null;
 
+		capitalGain = capital * this.capitalGain;
+		capital += capitalGain;
 		capital += salary - expenses;
 		salary  += salary * this.salaryIncrease;
 		expenses += expenses * this.expensesIncrease;
@@ -61,6 +64,7 @@ calc.getRetirementYears = function () {
 			'<tr class="breakdown-row"><td>' 
 			+ years + '</td><td class="currency">' 
 			+ Math.round( capital ) + '</td><td class="currency">' 
+			+ Math.round( capitalGain ) + '</td><td class="currency">' 
 			+ Math.round( salary ) + '</td><td class="negative-currency">' 
 			+ Math.round( expenses ) + '</td><td class="currency">' 
 			+ Math.round( netIncome ) + '</td></tr>'
@@ -98,7 +102,7 @@ $(document).ready( function() {
 		wcir.putField( '#salary-increase', calc.salaryIncrease * 100, '?' );
 		wcir.putField( '#expenses-increase', calc.expensesIncrease * 100, '?' );
 		wcir.putField( '#dividend-yield', calc.avgDividendYield * 100, '?' );
-		// wcir.putField( '#capital-gain', calc.capitalGain * 100, '?' );
+		wcir.putField( '#capital-gain', calc.capitalGain * 100, '?' );
 
 		// now display results
 		$( '#result' ).show();
