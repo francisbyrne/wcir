@@ -59,10 +59,10 @@ calc.getRetirementYears = function () {
 
 		$( '#breakdown-table' ).append(
 			'<tr class="breakdown-row"><td>' 
-			+ years + '</td><td class="dollar">' 
-			+ Math.round( capital ) + '</td><td class="dollar">' 
-			+ Math.round( salary ) + '</td><td class="dollar">' 
-			+ Math.round( expenses ) + '</td><td class="dollar">' 
+			+ years + '</td><td class="currency">' 
+			+ Math.round( capital ) + '</td><td class="currency">' 
+			+ Math.round( salary ) + '</td><td class="negative-currency">' 
+			+ Math.round( expenses ) + '</td><td class="currency">' 
 			+ Math.round( netIncome ) + '</td></tr>'
 		);
 	}

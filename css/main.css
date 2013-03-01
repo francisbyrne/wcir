@@ -10,12 +10,16 @@
 	font-weight: bold;
 }
 
-.dollar:before {
+.currency:before {
 	content: '$';
 }
 
 .percent:after {
 	content: '%';
+}
+
+.negative-currency:before {
+	content: '-$';
 }
 
 /**
