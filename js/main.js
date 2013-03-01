@@ -109,7 +109,7 @@ $(document).ready( function() {
 
 		// show details button
 		$( '#show-details' ).click( function() {
-			$( '#details' ).show();
+			$( '#details' ).slideDown();
 		});
 
 	});
