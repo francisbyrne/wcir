@@ -89,9 +89,9 @@ $(document).ready( function() {
 		$( '.breakdown-row' ).remove();
 
 		// get the calculation inputs
-		calc.capital 	= wcir.getFieldValue( 'capital' ) * 1000;
-		calc.salary 	= wcir.getFieldValue( 'salary' ) * 1000;
-		calc.expenses = wcir.getFieldValue( 'expenses' ) * 1000;
+		calc.capital 	= wcir.getFieldValue( 'capital' );
+		calc.salary 	= wcir.getFieldValue( 'salary' );
+		calc.expenses = wcir.getFieldValue( 'expenses' );
 
 		// calculate the number of years to retirement
 		var result = calc.getRetirementYears();
